@@ -25,7 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="participants-section">
               <strong>Participants:</strong>
               <ul class="participants-list">
-                ${details.participants.map(email => `<li class="participant-item">${email}</li>`).join("")}
+                ${details.participants.map(email => `
+                  <li class="participant-item">
+                    <span class="participant-email">${email}</span>
+                    <button class="delete-participant" title="Remove participant" data-email="${email}" aria-label="Remove ${email}" tabindex="0">
+                      &#128465;
+                    </button>
+                  </li>
+                `).join("")}
               </ul>
             </div>
           `;
@@ -46,6 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         activitiesList.appendChild(activityCard);
+
+        // Add event listeners for delete icons
+        const deleteButtons = activityCard.querySelectorAll('.delete-participant');
+        deleteButtons.forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const email = btn.getAttribute('data-email');
+            // TODO: Implement unregister logic here (API call to unregister participant)
+            // Example: await unregisterParticipant(activityId, email);
+            // For now, just log
+            console.log('Unregister', email, 'from', name);
+          });
+        });
 
         const option = document.createElement("option");
         option.value = name;
