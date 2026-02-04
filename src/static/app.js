@@ -59,10 +59,40 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteButtons.forEach(btn => {
           btn.addEventListener('click', async (e) => {
             const email = btn.getAttribute('data-email');
-            // TODO: Implement unregister logic here (API call to unregister participant)
-            // Example: await unregisterParticipant(activityId, email);
-            // For now, just log
-            console.log('Unregister', email, 'from', name);
+            try {
+              const response = await fetch(
+                `/activities/${encodeURIComponent(name)}/unregister?email=${encodeURIComponent(email)}`,
+                {
+                  method: "DELETE",
+                }
+              );
+
+              const result = await response.json();
+
+              if (response.ok) {
+                // Show success message
+                messageDiv.textContent = result.message;
+                messageDiv.className = "success";
+                messageDiv.classList.remove("hidden");
+                
+                // Refresh activities list
+                await fetchActivities();
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                  messageDiv.classList.add("hidden");
+                }, 5000);
+              } else {
+                messageDiv.textContent = result.detail || "Failed to unregister";
+                messageDiv.className = "error";
+                messageDiv.classList.remove("hidden");
+              }
+            } catch (error) {
+              messageDiv.textContent = "Failed to unregister. Please try again.";
+              messageDiv.className = "error";
+              messageDiv.classList.remove("hidden");
+              console.error("Error unregistering:", error);
+            }
           });
         });
 
