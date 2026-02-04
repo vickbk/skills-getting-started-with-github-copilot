@@ -151,15 +151,36 @@ footer {
 }
 
 .participants-list {
-  margin: 0.3em 0 0.5em 1.2em;
-  padding: 0;
-  list-style-type: disc;
+  list-style: none;
+  padding-left: 0;
+  margin: 0.3em 0 0.5em 0;
 }
 
 .participant-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
   margin-bottom: 0.2em;
   color: #2a4d7c;
-  /* matches the previous inline color */
+}
+
+.delete-participant {
+  cursor: pointer;
+  color: #c62828;
+  margin-left: 6px;
+  font-size: 1.1em;
+  background: #fbe9e7;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  padding: 2px 6px;
+  transition: color 0.2s, background 0.2s;
+  outline: none;
+}
+.delete-participant:hover, .delete-participant:focus {
+  color: #b71c1c;
+  background: #ffebee;
+  border-color: #e57373;
 }
 
 .no-participants {
